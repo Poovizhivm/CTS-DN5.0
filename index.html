@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Community Event Portal</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
-    
 </head>
 
 <body onbeforeunload="return warningMessage()">
@@ -17,14 +19,20 @@
         <h1>Community Event Portal</h1>
 
         <nav>
+
             <ul>
+
                 <li><a href="#home">Home</a></li>
                 <li><a href="#events">Events</a></li>
                 <li><a href="#contact">Contact</a></li>
+
             </ul>
+
         </nav>
 
-        <a href="help.html" target="_blank">Help Page</a>
+        <a href="help.html" target="_blank">
+            Help Page
+        </a>
 
     </header>
 
@@ -35,7 +43,7 @@
             <h2>Welcome User</h2>
 
             <p>
-                <span>
+                <span style="color:red; font-weight:bold;">
                     Special Offer Available
                 </span>
             </p>
@@ -50,16 +58,6 @@
 
     <section id="events">
 
-        <div class="eventCard">
-            <h3>Music Event</h3>
-            <p>Enjoy live music show</p>
-        </div>
-
-        <div class="eventCard">
-            <h3>Art Workshop</h3>
-            <p>Creative drawing session</p>
-        </div>
-
     </section>
 
     <h2>Event Gallery</h2>
@@ -71,7 +69,7 @@
         <tr>
 
             <td>
-                <img src="img1.jpg"
+                <img src="https://picsum.photos/150?1"
                      alt="Event1"
                      title="Music"
                      width="150"
@@ -80,7 +78,7 @@
             </td>
 
             <td>
-                <img src="img2.jpg"
+                <img src="https://picsum.photos/150?2"
                      alt="Event2"
                      title="Art"
                      width="150"
@@ -89,7 +87,7 @@
             </td>
 
             <td>
-                <img src="img3.jpg"
+                <img src="https://picsum.photos/150?3"
                      alt="Event3"
                      title="Sports"
                      width="150"
@@ -102,7 +100,7 @@
         <tr>
 
             <td>
-                <img src="img4.jpg"
+                <img src="https://picsum.photos/150?4"
                      alt="Event4"
                      title="Dance"
                      width="150"
@@ -111,7 +109,7 @@
             </td>
 
             <td>
-                <img src="img5.jpg"
+                <img src="https://picsum.photos/150?5"
                      alt="Event5"
                      title="Food"
                      width="150"
@@ -120,7 +118,7 @@
             </td>
 
             <td>
-                <img src="img6.jpg"
+                <img src="https://picsum.photos/150?6"
                      alt="Event6"
                      title="Festival"
                      width="150"
@@ -134,9 +132,11 @@
 
     <h2>Registration Form</h2>
 
-    <form>
+    <form id="registerForm"
+          onsubmit="validateForm(event)">
 
         <input type="text"
+               name="username"
                placeholder="Enter Name"
                required
                autofocus>
@@ -144,6 +144,7 @@
         <br>
 
         <input type="email"
+               name="email"
                placeholder="Enter Email"
                required>
 
@@ -160,7 +161,9 @@
 
         <br>
 
-        <select id="eventType" onchange="showFee(this.value)">
+        <select id="eventType"
+                name="event"
+                onchange="showFee(this.value)">
 
             <option value="">Select Event</option>
             <option value="100">Music</option>
@@ -176,23 +179,35 @@
 
         <p id="count"></p>
 
-        <button type="button" onclick="submitForm()">
+        <button type="submit"
+                id="registerBtn">
+
             Submit
+
         </button>
 
         <br><br>
 
         <output id="msg"></output>
 
+        <p id="formError"></p>
+
     </form>
 
     <h2>Promo Video</h2>
 
-    <video controls width="400" oncanplay="videoReady()">
-        <source src="video.mp4" type="video/mp4">
+    <video controls
+           width="400"
+           oncanplay="videoReady()">
+
+        <source src="video.mp4"
+                type="video/mp4">
+
     </video>
 
     <p id="videoMsg"></p>
+
+    <p id="loading"></p>
 
     <button onclick="savePreference()">
         Save Preference
@@ -221,118 +236,15 @@
     <footer id="contact">
 
         <h2>Contact</h2>
+
         <p>Email : community@gmail.com</p>
 
     </footer>
 
-    <script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-        console.log("Portal Loaded");
-
-        function validatePhone(){
-
-            let phone =
-            document.getElementById("phone").value;
-
-            if(phone.length < 10){
-                alert("Invalid Phone Number");
-            }
-        }
-
-        function showFee(value){
-
-            document.getElementById("fee").innerHTML =
-            "Fee : " + value;
-        }
-
-        function submitForm(){
-
-            document.getElementById("msg").innerHTML =
-            "Registration Successful";
-
-            alert("Submitted");
-        }
-
-        function enlarge(img){
-
-            img.style.width = "300px";
-        }
-
-        function countChar(){
-
-            let text =
-            document.getElementById("feedback").value;
-
-            document.getElementById("count").innerHTML =
-            text.length;
-        }
-
-        function videoReady(){
-
-            document.getElementById("videoMsg").innerHTML =
-            "Video ready to play";
-        }
-
-        function warningMessage(){
-
-            return "Form not completed";
-        }
-
-        function savePreference(){
-
-            let value =
-            document.getElementById("eventType").value;
-
-            localStorage.setItem("event", value);
-
-            sessionStorage.setItem("user","guest");
-        }
-
-        window.onload = function(){
-
-            let saved =
-            localStorage.getItem("event");
-
-            if(saved){
-
-                document.getElementById("eventType").value =
-                saved;
-            }
-        }
-
-        function clearData(){
-
-            localStorage.clear();
-            sessionStorage.clear();
-        }
-
-        function findLocation(){
-
-            navigator.geolocation.getCurrentPosition(
-                success,
-                error,
-                {
-                    enableHighAccuracy:true,
-                    timeout:5000
-                }
-            );
-        }
-
-        function success(position){
-
-            document.getElementById("location").innerHTML =
-            "Latitude : " +
-            position.coords.latitude +
-            "<br>Longitude : " +
-            position.coords.longitude;
-        }
-
-        function error(){
-
-            alert("Location access denied");
-        }
-
-    </script>
+    <script src="main.js"></script>
 
 </body>
+
 </html>
